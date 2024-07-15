@@ -1,0 +1,26 @@
+name: Build Process
+
+on:
+  workflow_call:
+    inputs:
+      env-name:
+        description: 'environment name'
+        type: string
+        required: true
+    outputs:
+      current-time:
+        description: 'The time when greeting.'
+        value: ${{ jobs.reusable-job.outputs.current-time }}
+
+jobs:
+  reusable-job:
+    environment: ${{ inputs.env-name }}
+    runs-on: ubuntu-latest
+    outputs:
+      current-time: ${{ steps.current-time.outputs.time }}
+    steps:
+      - name: Greet someone
+        run: echo "Hello ${{ vars.env_name }}"
+      - name: Output the current time
+        id: current-time
+        run: echo "time=$(date)" >> $GITHUB_OUTPUT
