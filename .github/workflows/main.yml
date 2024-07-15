@@ -1,29 +1,29 @@
-name: Reuse other workflow
+name: Reuse Build Process
 
 on: [workflow_dispatch]
 
 jobs: 
   dev: 
-    uses: './.github/workflows/reusable.yml'
+    uses: './.github/workflows/build-process.yml'
     with: 
       env-name: 'dev'
   qa: 
-    uses: './.github/workflows/reusable.yml'
+    uses: './.github/workflows/build-process.yml'
     needs: [dev]
     with: 
       env-name: 'qa'
   qa1: 
-    uses: './.github/workflows/reusable.yml'
+    uses: './.github/workflows/build-process.yml'
     needs: [dev]
     with: 
       env-name: 'qa1'
   stage: 
-    uses: './.github/workflows/reusable.yml'
+    uses: './.github/workflows/build-process.yml'
     needs: [qa, qa1]
     with: 
       env-name: 'stage'
   prod: 
-    uses: './.github/workflows/reusable.yml'
+    uses: './.github/workflows/build-process.yml'
     needs: [stage]
     with: 
       env-name: 'prod'
